@@ -168,6 +168,7 @@ Since we're in `main()` now, let's take a look at that. After Nim sets up a few 
 004049a6      return 
 ```
 Excellent—this function takes no parameters and has no side effects, so we can safely ignore it… right? Not quite. Binary Ninja, Ghidra (rz-ghidra included), and Ida all claim in the decompilation that this function simply returns without doing anything, but a look at the disassembly reveals what's really going on.
+
 ![](assets/r13_binja.png)
 
 First, `r13` is moved into `rax`, then the return address gets popped into `rdi`, and finally `rdi` is jumped to, returning back to the caller. All it does it return `r13`. Here's the corresponding Nim source code:
